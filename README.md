@@ -11,9 +11,11 @@ send prompts and get structured JSON back instead of me clicking around.
 python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt      # or: pip install playwright
-python -m playwright install chromium
+python -m playwright install chromium # one-time: downloads the browser
 cp .env.example .env                 # then edit .env
 ```
+
+The `playwright install chromium` step only needs to run once per machine.
 
 ## First-time login (once)
 
@@ -46,6 +48,19 @@ python -m askgo.cli stop               # stop the serve browser
 conversation carries on. If nothing is running, it spins up a fresh headless
 browser for that single call and exits. `--serve` forces the IPC path, and
 `--new-session` starts a clean conversation even when a `serve` is up.
+
+## Commands
+
+Global flags (any subcommand): `--base-url URL`, `--state-file PATH`,
+`--timeout MS`.
+
+| command | what it does | flags |
+|---------|--------------|-------|
+| `ask "prompt"` | send a prompt, print the reply as JSON | `--model`, `--no-save-media`, `--new-session`, `--serve`, `--headed` |
+| `login` | interactive first-time login, saves the session | — |
+| `serve` | start a long-lived browser for multi-turn `ask` | `--serve-timeout N` (auto-stop after N s, 0 = until Ctrl-C) |
+| `stop` | stop a running `serve` | — |
+| `probe` | dump candidate selectors to `debug/` for tuning | `--headed` |
 
 ## Output
 
@@ -104,6 +119,13 @@ All page selectors live in `askgo/selectors.py`. They're best-effort (role / ari
 / placeholder based) and need tuning against the real page. Run
 `python -m askgo.cli probe` to dump candidate elements to `debug/`.
 
+## Development
+
+`python -m compileall -q askgo` byte-compiles the package, and
+`python -c "import askgo, askgo.cli, ..."` catches import errors early. Both run
+automatically in CI (`.github/workflows/ci.yml`) on every push and pull request
+to `main`.
+
 ## Safety
 
 - No account or password is stored — only the session cookie state is saved.
@@ -111,3 +133,7 @@ All page selectors live in `askgo/selectors.py`. They're best-effort (role / ari
   for a person.
 - Only my own account is used, low-frequency, single-threaded, no scraping of
   history or other people's data.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
