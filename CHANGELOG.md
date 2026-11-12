@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Added a "How it works" diagram to the README.
+
 ## [0.2.0] - 2026-11-12
 
 ### Added

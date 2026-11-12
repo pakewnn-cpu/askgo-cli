@@ -9,6 +9,24 @@ send prompts and get structured JSON back instead of me clicking around.
 
 ![A sample askgo-cli run](docs/demo.png)
 
+## How it works
+
+```
+you or an agent
+      │  a prompt
+      ▼
+   askgo-cli  ──Playwright──▶  askgo.co web UI
+      │
+      ▼
+  one JSON object on stdout
+  (reply text, and/or media links or local files)
+```
+
+`ask` reuses a long-lived `serve` browser when one is reachable on the CDP
+endpoint, so a conversation carries on; otherwise it launches a fresh headless
+browser for that single call. The login state is saved once and reused, so you
+are not prompted to sign in again.
+
 ## Install
 
 ```bash
