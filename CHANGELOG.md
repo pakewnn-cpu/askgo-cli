@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-12
+
 ### Added
 - A unit test suite in `tests/` covering config, error mapping, and the CLI
   argument parsing (18 tests, run with `python -m unittest discover -s tests`).
