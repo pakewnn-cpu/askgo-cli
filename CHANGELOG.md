@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - A CI matrix that runs on both Python 3.9 and 3.12, plus a ruff lint job.
 - `requirements-dev.txt` for the test/lint tooling.
 - A rendered terminal screenshot in the README.
+- A `CONTRIBUTING.md`, a `SECURITY.md`, and an issue-template config so new
+  issues come in through the right template.
 
 ### Changed
 - Tidied imports and a few small cleanups flagged by ruff.

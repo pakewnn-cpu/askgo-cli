@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: I'm not sure if it's a bug
+    url: https://github.com/pakewnn-cpu/askgo-cli/issues?q=is%3Aissue
+    about: Open a short discussion first if you're not sure.
