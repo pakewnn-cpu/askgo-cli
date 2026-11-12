@@ -5,6 +5,8 @@ with [Playwright](https://playwright.dev/python/). I built it because AskGo only
 has a web interface and no public API, so a terminal agent (like Codex CLI) can
 send prompts and get structured JSON back instead of me clicking around.
 
+[![CI](https://github.com/pakewnn-cpu/askgo-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/pakewnn-cpu/askgo-cli/actions/workflows/ci.yml)
+
 ## Install
 
 ```bash

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "askgo-cli"
+version = "0.1.0"
+description = "A small command-line client that drives the askgo.co web UI with Playwright."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Gan pake", email = "Pakewnn@gmail.com" }]
+keywords = ["playwright", "cli", "automation", "ai"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "playwright>=1.40",
+]
+
+[project.scripts]
+askgo = "askgo.cli:main"
+
+[tool.setuptools]
+packages = ["askgo"]
