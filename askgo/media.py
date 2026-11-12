@@ -6,10 +6,9 @@ ok=false and a reason, and processing continues.
 from __future__ import annotations
 
 import time
-import urllib.parse
 from pathlib import Path
 
-from playwright.sync_api import Page, BrowserContext, Locator
+from playwright.sync_api import BrowserContext, Page
 
 from .config import Config
 from .selectors import Selectors

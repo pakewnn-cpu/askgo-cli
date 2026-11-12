@@ -20,7 +20,7 @@ import uuid
 from pathlib import Path
 
 from .config import Config
-from .errors import AskGoError, Result, EXIT_OK, EXIT_CLIENT
+from .errors import EXIT_CLIENT, EXIT_OK, AskGoError, Result
 
 POLL_INTERVAL_S = 0.2
 

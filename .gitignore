@@ -7,3 +7,7 @@ __pycache__/
 .env
 
 .DS_Store
+
+# build / tooling artifacts
+askgo_cli.egg-info/
+.ruff_cache/

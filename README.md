@@ -7,6 +7,8 @@ send prompts and get structured JSON back instead of me clicking around.
 
 [![CI](https://github.com/pakewnn-cpu/askgo-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/pakewnn-cpu/askgo-cli/actions/workflows/ci.yml)
 
+![A sample askgo-cli run](docs/demo.png)
+
 ## Install
 
 ```bash
@@ -123,10 +125,29 @@ All page selectors live in `askgo/selectors.py`. They're best-effort (role / ari
 
 ## Development
 
-`python -m compileall -q askgo` byte-compiles the package, and
-`python -c "import askgo, askgo.cli, ..."` catches import errors early. Both run
-automatically in CI (`.github/workflows/ci.yml`) on every push and pull request
-to `main`.
+The project is laid out so it is easy to hack on:
+
+```bash
+pip install -r requirements-dev.txt   # playwright + pytest + ruff
+python -m playwright install chromium  # one-time browser download
+```
+
+Run the test suite:
+
+```bash
+python -m unittest discover -s tests
+```
+
+Lint with ruff (the same checks CI runs):
+
+```bash
+ruff check askgo tests
+```
+
+`python -m compileall -q askgo tests` byte-compiles everything and catches
+syntax errors early. All of these run automatically in
+[CI](.github/workflows/ci.yml) on every push and pull request to `main`, on both
+Python 3.9 and 3.12.
 
 ## Safety
 

@@ -7,7 +7,7 @@ Exit codes:
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Optional
 
 EXIT_OK = 0

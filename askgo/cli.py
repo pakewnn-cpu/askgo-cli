@@ -21,12 +21,11 @@ import time
 from pathlib import Path
 from urllib.parse import urlparse
 
-from .config import Config
-from .selectors import Selectors
-from .session import Session
-from .client import AskGoClient
 from . import ipc
-from .errors import AskGoError, Result, EXIT_OK, EXIT_CLIENT, EXIT_NOT_LOGGED_IN
+from .client import AskGoClient
+from .config import Config
+from .errors import EXIT_CLIENT, EXIT_OK, AskGoError, Result
+from .session import Session
 
 PID_FILE = Path(".askgo/serve.pid")
 

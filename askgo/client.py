@@ -8,12 +8,13 @@ from __future__ import annotations
 import re
 import time
 
-from playwright.sync_api import Page, BrowserContext, Error as PWError
+from playwright.sync_api import BrowserContext, Page
+from playwright.sync_api import Error as PWError
 
-from .config import Config
-from .selectors import Selectors
-from .errors import AskGoError, EXIT_CLIENT
 from . import media as media_mod
+from .config import Config
+from .errors import EXIT_CLIENT, AskGoError
+from .selectors import Selectors
 
 POLL_INTERVAL_MS = 400
 STABLE_POLLS = 2

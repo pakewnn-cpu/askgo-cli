@@ -8,24 +8,23 @@ Two connection modes:
 from __future__ import annotations
 
 import json
-import os
 import re
-import signal
 import sys
 import time
-from pathlib import Path
 
 from playwright.sync_api import (
-    sync_playwright,
     Browser,
     BrowserContext,
     Page,
+    sync_playwright,
+)
+from playwright.sync_api import (
     Error as PWError,
 )
 
 from .config import Config
+from .errors import EXIT_NOT_LOGGED_IN, AskGoError
 from .selectors import Selectors
-from .errors import AskGoError, EXIT_NOT_LOGGED_IN, EXIT_CLIENT
 
 
 class Session:
@@ -39,7 +38,7 @@ class Session:
         self._owns_browser = False
 
     # -- lifecycle ----------------------------------------------------------
-    def __enter__(self) -> "Session":
+    def __enter__(self) -> Session:
         return self
 
     def __exit__(self, *exc) -> None:
@@ -181,7 +180,7 @@ class Session:
                 except PWError:
                     pass
             logout = self.page.get_by_role("button").filter(
-                has_text=re.compile(r"退出|log ?out|sign ?out|我的|个人中心", re.I)
+                has_text=re.compile(r"退出|log ?out|sign ?out|我的|个人中心", re.IGNORECASE)
             )
             probe["logout"] = bool(logout.count())
             probe["text_snippet"] = (self.page.locator("body").inner_text(timeout=1500)
@@ -213,7 +212,7 @@ class Session:
             return False
         # A visible "登录 / login" button means we are still in guest mode.
         try:
-            lb = self.page.get_by_role("button", name=re.compile(r"登录|log ?in", re.I))
+            lb = self.page.get_by_role("button", name=re.compile(r"登录|log ?in", re.IGNORECASE))
             if lb.count() and lb.first.is_visible(timeout=1000):
                 return False
         except PWError:
@@ -221,7 +220,7 @@ class Session:
         # Check for user-specific markers that only appear when logged in.
         try:
             user_marker = self.page.get_by_text(
-                re.compile(r"剩余积分|我的内容|升级|退出|log ?out|sign ?out|个人中心|专业版", re.I)
+                re.compile(r"剩余积分|我的内容|升级|退出|log ?out|sign ?out|个人中心|专业版", re.IGNORECASE)
             )
             if user_marker.count() > 0:
                 return True
@@ -247,7 +246,7 @@ class Session:
         except PWError:
             pass
         try:
-            lb = self.page.get_by_role("button", name=re.compile(r"登录|log ?in", re.I))
+            lb = self.page.get_by_role("button", name=re.compile(r"登录|log ?in", re.IGNORECASE))
             if lb.count():
                 lb.first.click(timeout=3000)
                 sys.stderr.write("[askgo] Login dialog opened; please sign in...\n")

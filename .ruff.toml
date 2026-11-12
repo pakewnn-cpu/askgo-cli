@@ -1,0 +1,11 @@
+# Ruff config for askgo-cli.
+#
+# We only lint for things that matter: real bugs (F), broken imports (I),
+# and syntax errors (E9). We deliberately skip style nits like line length
+# so the code stays readable without a separate formatter pass.
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[lint.per-file-ignores]
+"tests/*" = ["S101"]  # asserts are expected in tests

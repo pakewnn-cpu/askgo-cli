@@ -7,21 +7,44 @@ on:
     branches: [main]
 
 jobs:
-  check:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Lint
+        run: ruff check askgo tests
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install the package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
 
       - name: Byte-compile
-        run: python -m compileall -q askgo
+        run: python -m compileall -q askgo tests
 
-      - name: Import check
-        run: python -c "import askgo, askgo.cli, askgo.client, askgo.config, askgo.errors, askgo.ipc, askgo.media, askgo.selectors, askgo.session"
+      - name: Run tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Smoke test the CLI
+        run: |
+          python -m askgo.cli --help
+          python -m askgo.cli ask --help

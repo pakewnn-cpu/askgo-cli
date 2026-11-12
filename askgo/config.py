@@ -27,8 +27,7 @@ def _load_dotenv(path: str | Path) -> None:
         line = raw.strip()
         if not line or line.startswith("#"):
             continue
-        if line.startswith("export "):
-            line = line[len("export "):]
+        line = line.removeprefix("export ")
         if "=" not in line:
             continue
         key, val = line.split("=", 1)
@@ -57,7 +56,7 @@ class Config:
     use_serve: bool = False
 
     @classmethod
-    def from_env(cls, env_file: str | Path = ".env") -> "Config":
+    def from_env(cls, env_file: str | Path = ".env") -> Config:
         _load_dotenv(env_file)
         g = os.environ.get
         cfg = cls(

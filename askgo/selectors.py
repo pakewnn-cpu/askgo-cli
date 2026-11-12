@@ -14,7 +14,8 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from playwright.sync_api import Page, Locator
+
+from playwright.sync_api import Locator, Page
 
 
 def _re(*patterns: str) -> re.Pattern:
