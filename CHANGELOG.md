@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Added a test suite for the IPC file-queue layer (`tests/test_ipc.py`) covering the
+  path helpers, the timeout-and-cleanup path, and `process_request`'s success /
+  empty-reply / new-session / model-fallback / unexpected-error branches.
 - Added a "How it works" diagram to the README.
 
 ## [0.2.0] - 2026-11-12
