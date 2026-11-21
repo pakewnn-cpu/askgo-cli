@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Dropped Python 3.9 from the CI test matrix: it reached end-of-life in October
+  2025 and the runner image no longer ships it, so the 3.9 leg could not even
+  start. The matrix now runs on 3.11 and 3.12.
 - Added a test suite for the IPC file-queue layer (`tests/test_ipc.py`) covering the
   path helpers, the timeout-and-cleanup path, and `process_request`'s success /
   empty-reply / new-session / model-fallback / unexpected-error branches.
