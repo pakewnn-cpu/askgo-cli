@@ -165,7 +165,7 @@ ruff check askgo tests
 `python -m compileall -q askgo tests` byte-compiles everything and catches
 syntax errors early. All of these run automatically in
 [CI](.github/workflows/ci.yml) on every push and pull request to `main`, on both
-Python 3.9 and 3.12.
+Python 3.11 and 3.12.
 
 ## Safety
 

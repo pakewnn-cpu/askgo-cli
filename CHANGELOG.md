@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Fixed a stale reference in the README: the Development section still said CI
+  runs on Python 3.9 and 3.12, but the matrix moved to 3.11 and 3.12 when 3.9
+  was dropped.
 - Made the Playwright import in `askgo/selectors.py` type-only so the hand-tuned
   selector patterns can be imported and tested without a browser, and added
   `tests/test_selectors.py` to lock those patterns in (login / logout markers,
