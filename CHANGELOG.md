@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Made `Config.from_env` tolerate a malformed numeric `.env` value: a typo like
+  `ASKGO_TIMEOUT_MS=60s` or an empty value used to raise a bare `int()` traceback
+  that skipped the "always print one JSON object on stdout" contract (config is
+  built before the CLI's error handler). It now falls back to the default and
+  warns on stderr instead, with a regression test in `tests/test_config.py`.
 - Fixed a stale reference in the README: the Development section still said CI
   runs on Python 3.9 and 3.12, but the matrix moved to 3.11 and 3.12 when 3.9
   was dropped.

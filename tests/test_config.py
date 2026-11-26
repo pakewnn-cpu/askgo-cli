@@ -70,5 +70,35 @@ class TestDotenvLoader(unittest.TestCase):
                 del os.environ["ASKGO_BASE_URL"]
 
 
+class TestMalformedNumeric(unittest.TestCase):
+    """A typo in a numeric .env value must not crash config loading."""
+
+    def _load(self, body: str) -> Config:
+        with tempfile.TemporaryDirectory() as d:
+            env = Path(d) / ".env"
+            env.write_text(body, encoding="utf-8")
+            # clear any value a sibling test may have left in os.environ
+            for key in ("ASKGO_TIMEOUT_MS", "ASKGO_LOGIN_TIMEOUT_S"):
+                os.environ.pop(key, None)
+            try:
+                return Config.from_env(env_file=env)
+            finally:
+                for key in ("ASKGO_TIMEOUT_MS", "ASKGO_LOGIN_TIMEOUT_S"):
+                    os.environ.pop(key, None)
+
+    def test_bad_timeout_falls_back_to_default(self):
+        cfg = self._load("ASKGO_TIMEOUT_MS=60s\n")
+        self.assertEqual(cfg.timeout_ms, 60000)
+
+    def test_empty_login_timeout_falls_back_to_default(self):
+        cfg = self._load("ASKGO_LOGIN_TIMEOUT_S=\n")
+        self.assertEqual(cfg.login_timeout_s, 600)
+
+    def test_valid_values_still_parse(self):
+        cfg = self._load("ASKGO_TIMEOUT_MS=12000\nASKGO_LOGIN_TIMEOUT_S=30\n")
+        self.assertEqual(cfg.timeout_ms, 12000)
+        self.assertEqual(cfg.login_timeout_s, 30)
+
+
 if __name__ == "__main__":
     unittest.main()

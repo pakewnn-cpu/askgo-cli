@@ -14,6 +14,7 @@ Environment variables (see .env.example):
 from __future__ import annotations
 
 import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -36,6 +37,25 @@ def _load_dotenv(path: str | Path) -> None:
         if len(val) >= 2 and val[0] == val[-1] and val[0] in "\"'":
             val = val[1:-1]
         os.environ.setdefault(key, val)
+
+
+def _coerce_int(value: str, default: int, name: str) -> int:
+    """Parse an integer env var, falling back to ``default`` on a bad value.
+
+    A typo like ``ASKGO_TIMEOUT_MS=60s`` or an empty value would otherwise
+    raise a bare ``int()`` traceback. Because the CLI builds its config before
+    its error handler, that traceback would skip the "always print one JSON
+    object on stdout" contract, so we degrade to the default and warn on stderr
+    instead of crashing.
+    """
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        sys.stderr.write(
+            f"[askgo] {name}={value!r} is not a valid integer; "
+            f"using default {default}\n"
+        )
+        return default
 
 
 @dataclass
@@ -63,14 +83,14 @@ class Config:
             base_url=g("ASKGO_BASE_URL", "https://askgo.co").rstrip("/"),
             default_model=g("ASKGO_DEFAULT_MODEL", ""),
             headless=str(g("ASKGO_HEADLESS", "1")).lower() in ("1", "true", "yes"),
-            timeout_ms=int(g("ASKGO_TIMEOUT_MS", "60000")),
+            timeout_ms=_coerce_int(g("ASKGO_TIMEOUT_MS", "60000"), 60000, "ASKGO_TIMEOUT_MS"),
             state_file=Path(g("ASKGO_STATE_FILE", ".askgo/storage_state.json")),
             auth_state_file=Path(g("ASKGO_AUTH_STATE_FILE", ".askgo/auth_state.json")),
             media_dir=Path(g("ASKGO_MEDIA_DIR", "media")),
             debug_dir=Path(g("ASKGO_DEBUG_DIR", "debug")),
             serve_url=g("ASKGO_SERVE_URL", "http://127.0.0.1:9222"),
             user_agent=g("ASKGO_USER_AGENT", ""),
-            login_timeout_s=int(g("ASKGO_LOGIN_TIMEOUT_S", "600")),
+            login_timeout_s=_coerce_int(g("ASKGO_LOGIN_TIMEOUT_S", "600"), 600, "ASKGO_LOGIN_TIMEOUT_S"),
         )
         cfg.ensure_dirs()
         return cfg
