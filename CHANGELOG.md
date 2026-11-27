@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Synced `.env.example` with the variables `Config.from_env` actually reads:
+  added `ASKGO_LOGIN_TIMEOUT_S` (integer seconds for a first-time login) and
+  `ASKGO_AUTH_STATE_FILE`, and noted that the two numeric vars are plain
+  integers.
 - Made `Config.from_env` tolerate a malformed numeric `.env` value: a typo like
   `ASKGO_TIMEOUT_MS=60s` or an empty value used to raise a bare `int()` traceback
   that skipped the "always print one JSON object on stdout" contract (config is
