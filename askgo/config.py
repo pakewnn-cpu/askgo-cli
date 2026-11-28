@@ -6,10 +6,12 @@ Environment variables (see .env.example):
     ASKGO_HEADLESS      "1"/"0" headless mode    (default 1)
     ASKGO_TIMEOUT_MS    per-step timeout in ms   (default 60000)
     ASKGO_STATE_FILE    saved login state path   (default ./.askgo/storage_state.json)
+    ASKGO_AUTH_STATE_FILE  auth state file path  (default ./.askgo/auth_state.json)
     ASKGO_MEDIA_DIR     where media is saved     (default ./media)
     ASKGO_DEBUG_DIR     where debug screenshots  (default ./debug)
     ASKGO_SERVE_URL     CDP endpoint for serve   (default http://127.0.0.1:9222)
     ASKGO_USER_AGENT    optional user agent override
+    ASKGO_LOGIN_TIMEOUT_S  login timeout in s    (default 600)
 """
 from __future__ import annotations
 

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- Synced the README env-var table and the `config.py` docstring with the two
+  variables `Config.from_env` reads but neither listed: `ASKGO_AUTH_STATE_FILE`
+  (where the auth state is saved) and `ASKGO_LOGIN_TIMEOUT_S` (seconds to wait
+  for a first-time login). Closes the same gap the `.env.example` sync left in
+  the table.
 - Synced `.env.example` with the variables `Config.from_env` actually reads:
   added `ASKGO_LOGIN_TIMEOUT_S` (integer seconds for a first-time login) and
   `ASKGO_AUTH_STATE_FILE`, and noted that the two numeric vars are plain

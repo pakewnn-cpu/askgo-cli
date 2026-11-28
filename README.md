@@ -130,10 +130,12 @@ is hardcoded.
 | `ASKGO_HEADLESS` | `1` | `0` keeps the browser visible |
 | `ASKGO_TIMEOUT_MS` | `60000` | per-step timeout |
 | `ASKGO_STATE_FILE` | `.askgo/storage_state.json` | saved login state |
+| `ASKGO_AUTH_STATE_FILE` | `.askgo/auth_state.json` | where the auth state is saved |
 | `ASKGO_MEDIA_DIR` | `media` | where media is saved |
 | `ASKGO_DEBUG_DIR` | `debug` | where screenshots go |
 | `ASKGO_SERVE_URL` | `http://127.0.0.1:9222` | CDP endpoint for `serve` |
 | `ASKGO_USER_AGENT` | *(empty)* | optional user-agent override |
+| `ASKGO_LOGIN_TIMEOUT_S` | `600` | seconds to wait for a first-time login |
 
 ## Selectors
 
